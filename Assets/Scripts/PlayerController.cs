@@ -48,31 +48,84 @@ public class PlayerController : MonoBehaviour
         var magnitude = _direction.magnitude;
         if (magnitude > 1f)
             magnitude = 1f;
-        
+
         transform.position += _move * speed * Time.deltaTime;
     }
 
+    #region Player 1 Controller
+
     private void OnLeftStick(Vector2 value)
     {
-        if (player == Player.Player1)
-            _direction = new Vector3(value.x, 0f, value.y);
+        if (player != Player.Player1)
+            return;
+
+        _direction = new Vector3(value.x, 0f, value.y);
     }
+
+    private void OnInteract1()
+    {
+        if (player != Player.Player1)
+            return;
+
+        Debug.Log("OnInteract1");
+    }
+
+    private void OnLeftTrigger()
+    {
+        if (player != Player.Player1)
+            return;
+        Debug.Log("OnLeftTrigger");
+    }
+
+    #endregion
+
+    #region Player 2 Controller
 
     private void OnRightStick(Vector2 value)
     {
-        if (player == Player.Player2)
-            _direction = new Vector3(value.x, 0f, value.y);
+        if (player != Player.Player2)
+            return;
+
+        _direction = new Vector3(value.x, 0f, value.y);
     }
+
+    private void OnInteract2()
+    {
+        if (player != Player.Player2)
+            return;
+
+        Debug.Log("OnInteract2");
+    }
+
+    private void OnRightTrigger()
+    {
+        if (player != Player.Player2)
+            return;
+
+        Debug.Log("OnRightTrigger");
+    }
+
+    #endregion
 
     void OnEnable()
     {
         Observer.Player.OnLeftStick += OnLeftStick;
+        Observer.Player.OnInteract1 += OnInteract1;
+        Observer.Player.OnLeftTrigger += OnLeftTrigger;
+
         Observer.Player.OnRightStick += OnRightStick;
+        Observer.Player.OnInteract2 += OnInteract2;
+        Observer.Player.OnRightTrigger += OnRightTrigger;
     }
 
     void OnDisable()
     {
         Observer.Player.OnLeftStick -= OnLeftStick;
+        Observer.Player.OnInteract1 -= OnInteract1;
+        Observer.Player.OnLeftTrigger -= OnLeftTrigger;
+
         Observer.Player.OnRightStick -= OnRightStick;
+        Observer.Player.OnInteract2 -= OnInteract2;
+        Observer.Player.OnRightTrigger -= OnRightTrigger;
     }
 }

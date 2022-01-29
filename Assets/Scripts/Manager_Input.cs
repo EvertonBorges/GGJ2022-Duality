@@ -20,6 +20,8 @@ public static class Manager_Input
         gameplayActions.RightStick.performed += ctx => Observer.Player.OnRightStick.Notify(ctx.ReadValue<Vector2>());
         gameplayActions.Interact1.performed += ctx => Observer.Player.OnInteract1.Notify();
         gameplayActions.Interact2.performed += ctx => Observer.Player.OnInteract2.Notify();
+        gameplayActions.LeftTrigger.performed += ctx => Observer.Player.OnLeftTrigger.Notify();
+        gameplayActions.RightTrigger.performed += ctx => Observer.Player.OnRightTrigger.Notify();
 
         inputActions.Enable();
     }

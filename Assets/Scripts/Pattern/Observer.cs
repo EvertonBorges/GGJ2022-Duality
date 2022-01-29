@@ -166,6 +166,8 @@ public static class Observer
             public static Event<Vector2> OnRightStick = new Event<Vector2>(); 
             public static Event OnInteract1 = new Event();
             public static Event OnInteract2 = new Event();
+            public static Event OnLeftTrigger = new Event();
+            public static Event OnRightTrigger = new Event();
         }
 
     #endregion
