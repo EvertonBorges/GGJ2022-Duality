@@ -280,6 +280,10 @@ public class PlayerController : MonoBehaviour
     private void OnCantPlay()
     {
         m_canPlay = false;
+
+        m_rigidbody.angularVelocity = Vector3.zero;
+        
+        m_rigidbody.velocity = Vector3.zero;
     }
 
     void OnEnable()

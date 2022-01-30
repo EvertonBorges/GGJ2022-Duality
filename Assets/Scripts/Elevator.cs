@@ -106,10 +106,26 @@ public class Elevator : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        CheckTrigger(other);
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        CheckTrigger(other);
+    }
+
+    private void CheckTrigger(Collider other)
+    {
         if (m_isLock || !other.TryGetComponent<PlayerController>(out PlayerController player))
             return;
-        
-        switch(player.PlayerType)
+
+        if (player.PlayerType == PlayerController.Player.Player1 && m_player1)
+            return;
+
+        if (player.PlayerType == PlayerController.Player.Player2 && m_player2)
+            return;
+
+        switch (player.PlayerType)
         {
             case PlayerController.Player.Player1: m_player1 = true; break;
             case PlayerController.Player.Player2: m_player2 = true; break;
@@ -123,8 +139,8 @@ public class Elevator : MonoBehaviour
     {
         if (m_isLock || !other.TryGetComponent<PlayerController>(out PlayerController player))
             return;
-        
-        switch(player.PlayerType)
+
+        switch (player.PlayerType)
         {
             case PlayerController.Player.Player1: m_player1 = false; break;
             case PlayerController.Player.Player2: m_player2 = false; break;

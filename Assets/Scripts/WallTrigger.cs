@@ -18,7 +18,8 @@ public class WallTrigger : MonoBehaviour
     [Header("Switch Infos")]
     [SerializeField] private Transform _switch;
 
-    private Transform _cameraTransform;
+    private Transform m_cameraTransform;
+    private MeshRenderer m_meshRenderer = null;
 
     private bool m_isOn = false;
     public bool IsOn => m_isOn;
@@ -30,7 +31,7 @@ public class WallTrigger : MonoBehaviour
     private Coroutine m_coroutine = null;
     private Coroutine m_coroutineTutorial = null;
 
-    private Gamepad gamepad = null;
+    private Gamepad m_gamepad = null;
 
     void Awake()
     {
@@ -41,7 +42,7 @@ public class WallTrigger : MonoBehaviour
 
     void Start()
     {
-        _cameraTransform = CameraController.MainCamera.transform;
+        m_cameraTransform = CameraController.MainCamera.transform;
 
         ConfigureTutorial();
     }
@@ -56,32 +57,32 @@ public class WallTrigger : MonoBehaviour
     private void FixCanvasRotation()
     {
         if (m_tutorial)
-            _canvas.transform.LookAt(_cameraTransform, Vector3.up);
+            _canvas.transform.LookAt(m_cameraTransform, Vector3.up);
     }
 
     private void UpdateTutorialText()
     {
-        if (gamepad == null && Gamepad.current != null)
+        if (m_gamepad == null && Gamepad.current != null)
         {
-            gamepad = Gamepad.current;
+            m_gamepad = Gamepad.current;
             _tutorial.text = _playerType == PlayerController.Player.Player1 ? "L1" : "R1";
         }
-        else if (gamepad != null && Gamepad.current == null)
+        else if (m_gamepad != null && Gamepad.current == null)
         {
-            gamepad = null;
+            m_gamepad = null;
             _tutorial.text = _playerType == PlayerController.Player.Player1 ? "E" : "U";
         }
     }
 
     private void ChangeSwitchMaterial()
     {
-        var meshRenderer = _switch.GetComponent<MeshRenderer>();
+        m_meshRenderer = _switch.GetComponent<MeshRenderer>();
 
         switch(_playerType)
         {
-            case PlayerController.Player.Anyone: meshRenderer.material = _defaultMat; break;
-            case PlayerController.Player.Player1: meshRenderer.material = _player1Mat; break;
-            case PlayerController.Player.Player2: meshRenderer.material = _player2Mat; break;
+            case PlayerController.Player.Anyone: m_meshRenderer.material = _defaultMat; break;
+            case PlayerController.Player.Player1: m_meshRenderer.material = _player1Mat; break;
+            case PlayerController.Player.Player2: m_meshRenderer.material = _player2Mat; break;
         }
     }
 
@@ -153,18 +154,28 @@ public class WallTrigger : MonoBehaviour
 
         float endPoint = m_isOn ? 0.25f : 1f;
 
+        Color startColor = m_isOn ? (_playerType == PlayerController.Player.Player1 ? _player1Mat.color : _player2Mat.color) : Color.green;
+
+        Color endColor = m_isOn ? Color.green : (_playerType == PlayerController.Player.Player1 ? _player1Mat.color : _player2Mat.color);
+
         while(currentTime < duration)
         {
             currentTime += Time.deltaTime;
 
             var yPosition = Mathf.Lerp(startPoint, endPoint, currentTime / duration);
 
+            var color = Color.Lerp(startColor, endColor, currentTime / duration);
+
             _switch.localPosition = new Vector3(_switch.localPosition.x, yPosition, _switch.localPosition.z);
+
+            m_meshRenderer.material.color = color;
 
             yield return null;
         }
 
         _switch.localPosition = new Vector3(_switch.localPosition.x, endPoint, _switch.localPosition.z);
+
+        m_meshRenderer.material.color = endColor;
 
         yield return null;
 
