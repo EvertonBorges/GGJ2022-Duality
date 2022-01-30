@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class WallTrigger : MonoBehaviour
 {
@@ -10,18 +12,58 @@ public class WallTrigger : MonoBehaviour
     [SerializeField] private Material _player2Mat;
     [SerializeField] private Material _defaultMat;
 
+    [SerializeField] private Canvas _canvas;
+    [SerializeField] private Text _tutorial;
+
     [Header("Switch Infos")]
     [SerializeField] private Transform _switch;
 
+    private Transform _cameraTransform;
+
     private bool m_isOn = false;
-    
     public bool IsOn => m_isOn;
 
+    private bool m_tutorial = false;
+
+    private List<int> m_collisions = new List<int>();
+
     private Coroutine m_coroutine = null;
+    private Coroutine m_coroutineTutorial = null;
+
+    private Gamepad gamepad = null;
 
     void Awake()
     {
         ChangeSwitchMaterial();
+
+        CallSwitch(0f);
+    }
+
+    void Start()
+    {
+        _cameraTransform = CameraController.MainCamera.transform;
+
+        ConfigureTutorial();
+    }
+
+    void Update()
+    {
+        if (m_tutorial)
+        {
+            // Debug.Log("Camera angle: " + _cameraTransform.eulerAngles);
+            _canvas.transform.LookAt(_cameraTransform, Vector3.up);
+        }
+
+        if (gamepad == null && Gamepad.current != null)
+        {
+            gamepad = Gamepad.current;
+            _tutorial.text = _playerType == PlayerController.Player.Player1 ? "L1" : "R1";
+        }
+        else if (gamepad != null && Gamepad.current == null)
+        {
+            gamepad = null;
+            _tutorial.text = _playerType == PlayerController.Player.Player1 ? "E" : "U";
+        }
     }
 
     private void ChangeSwitchMaterial()
@@ -34,6 +76,11 @@ public class WallTrigger : MonoBehaviour
             case PlayerController.Player.Player1: meshRenderer.material = _player1Mat; break;
             case PlayerController.Player.Player2: meshRenderer.material = _player2Mat; break;
         }
+    }
+
+    private void ConfigureTutorial()
+    {
+        CallTutorial(0f);
     }
 
     public void ForceToTurnOff()
@@ -49,7 +96,41 @@ public class WallTrigger : MonoBehaviour
         Observer.GameManager.TurnOnOff.Notify(playerType);
     }
 
-    private void CallSwitch(float duration = 0.25f)
+    void OnTriggerEnter(Collider other)
+    {
+        if (!other.TryGetComponent<PlayerController>(out PlayerController player) || (_playerType != PlayerController.Player.Anyone && _playerType != player.PlayerType))
+            return;
+
+        if (m_isOn)
+            return;
+
+        m_collisions.Add(other.GetInstanceID());
+
+        m_tutorial = true;
+
+        if (m_collisions.Count == 1)
+            CallTutorial();
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (!other.TryGetComponent<PlayerController>(out PlayerController player) || (_playerType != PlayerController.Player.Anyone && _playerType != player.PlayerType))
+            return;
+
+        if (m_isOn && !m_tutorial)
+            return;
+
+        m_collisions.Remove(other.GetInstanceID());
+
+        if (m_collisions.Count <= 0)
+        {
+            m_tutorial = false;
+
+            CallTutorial();
+        }
+    }
+
+    private void CallSwitch(float duration = 0.125f)
     {
         if (m_coroutine != null)
             StopCoroutine(m_coroutine);
@@ -82,4 +163,39 @@ public class WallTrigger : MonoBehaviour
 
         m_coroutine = null;
     }
+
+    private void CallTutorial(float duration = 0.25f)
+    {
+        if (m_coroutineTutorial != null)
+            StopCoroutine(m_coroutineTutorial);
+
+        m_coroutineTutorial = StartCoroutine(Tutorial(duration));
+    }
+
+    private IEnumerator Tutorial(float duration)
+    {
+        float currentTime = 0f;
+
+        float startScale = m_tutorial ? 0f : 1f;
+
+        float endScale = m_tutorial ? 1f : 0f;
+
+        while(currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+
+            var scale = Mathf.Lerp(startScale, endScale, currentTime / duration);
+
+            _canvas.transform.localScale = Vector3.one * scale;
+
+            yield return null;
+        }
+
+        _canvas.transform.localScale = Vector3.one * endScale;
+
+        yield return null;
+
+        m_coroutineTutorial = null;
+    }
+
 }

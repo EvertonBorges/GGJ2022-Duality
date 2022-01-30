@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
         var colliders = Physics.OverlapBox(transform.position, Vector3.one * 0.5f, Quaternion.identity, 1 << LayerMask.NameToLayer("WallTrigger"));
         if (colliders != null && colliders.Length > 0)
-            foreach(var c in colliders)
+            foreach (var c in colliders)
                 if (c.TryGetComponent<WallTrigger>(out WallTrigger trigger))
                 {
                     trigger.TurnOn(_player);
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
         var colliders = Physics.OverlapBox(transform.position, Vector3.one * 0.5f, Quaternion.identity, 1 << LayerMask.NameToLayer("WallTrigger"));
         if (colliders != null && colliders.Length > 0)
-            foreach(var c in colliders)
+            foreach (var c in colliders)
                 if (c.TryGetComponent<WallTrigger>(out WallTrigger trigger))
                 {
                     trigger.TurnOn(_player);
@@ -229,11 +229,20 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (_player == Player.Player2)
-            OnCollisionEnterPlayer2(other);
+            OnCollisionPlayer2(other);
     }
 
-    private void OnCollisionEnterPlayer2(Collision other)
+    private void OnCollisionStay(Collision other)
     {
+        if (_player == Player.Player2)
+            OnCollisionPlayer2(other);
+    }
+
+    private void OnCollisionPlayer2(Collision other)
+    {
+        if (other.collider.CompareTag("Ground"))
+            return;
+
         if (m_isDashing)
             m_isDashing = false;
     }
