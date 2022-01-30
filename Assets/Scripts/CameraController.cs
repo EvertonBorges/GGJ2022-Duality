@@ -6,22 +6,32 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 
+    public static Camera MainCamera { get; private set; } = null;
+
     [Header("Camera References")]
     [SerializeField] private CinemachineVirtualCamera _cam;
-    [Range(1f, 20f)] [SerializeField] private float _distanceFactor = 10f;
-    
+    [Range(1f, 50f)] [SerializeField] private float _distanceFactor = 10f;
+    [SerializeField] private Vector3 _minOffset = default;
+    [SerializeField] private Vector3 _maxOffset = default;
+
+    private CinemachineTransposer m_transposer = null;
+
+
     [Header("Player References")]
     [SerializeField] private Transform _midPoint;
     [SerializeField] private PlayerController _player1;
     [SerializeField] private PlayerController _player2;
 
-    private float minFov = 40f;
-    private float maxFov = 100f;
+    void Awake()
+    {
+        MainCamera = Camera.main;
+        m_transposer = _cam.GetCinemachineComponent<CinemachineTransposer>();
+    }
 
     void Update()
     {
         _midPoint.position = GetPlayersMidPoint();
-        _cam.m_Lens.FieldOfView = GetFovValue();
+        m_transposer.m_FollowOffset = GetOffset();
     }
 
     private Vector3 GetPlayersMidPoint()
@@ -29,13 +39,12 @@ public class CameraController : MonoBehaviour
         return _player1.transform.position + (_player2.transform.position - _player1.transform.position) / 2;
     }
 
-    private float GetFovValue()
+    private Vector3 GetOffset()
     {
-        return Mathf.Lerp(minFov, maxFov, GetPlayersDistance() / _distanceFactor);
-    }
+        var distance = Vector3.Distance(_player1.transform.position, _player2.transform.position);
 
-    private float GetPlayersDistance()
-    {
-        return Vector3.Distance(_player1.transform.position, _player2.transform.position);
+        var distanceProportion = distance / _distanceFactor;
+
+        return Vector3.Lerp(_minOffset, _maxOffset, distanceProportion);
     }
 }
