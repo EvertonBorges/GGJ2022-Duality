@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private bool m_isOnGround = false;
     private bool m_canCheckGround = true;
 
-    private bool m_canPlay = true;
+    private bool m_canPlay = false;
 
     private Vector3 m_move;
     private Vector3 m_direction;
@@ -283,6 +283,11 @@ public class PlayerController : MonoBehaviour
             m_isDashing = false;
     }
 
+    private void OnCanPlay()
+    {
+        m_canPlay = true;
+    }
+
     private void OnCantPlay()
     {
         m_canPlay = false;
@@ -302,6 +307,7 @@ public class PlayerController : MonoBehaviour
         Observer.Player.OnInteract2 += OnInteract2;
         Observer.Player.OnRightTrigger += OnRightTrigger;
 
+        Observer.Player.OnCanPlay += OnCanPlay;
         Observer.Player.OnCantPlay += OnCantPlay;
     }
 
@@ -315,6 +321,7 @@ public class PlayerController : MonoBehaviour
         Observer.Player.OnInteract2 -= OnInteract2;
         Observer.Player.OnRightTrigger -= OnRightTrigger;
         
+        Observer.Player.OnCanPlay -= OnCanPlay;
         Observer.Player.OnCantPlay -= OnCantPlay;
     }
 }

@@ -86,11 +86,18 @@ public class Elevator : MonoBehaviour
 
         float endPosition = 10f;
 
+        float proportion = 0f;
+
         while (currentTime < duration)
         {
             currentTime += Time.deltaTime;
 
-            var yPosition = Mathf.Lerp(startPosition, endPosition, currentTime / duration);
+            proportion = currentTime / duration;
+
+            if (proportion > 0.25f)
+                Observer.GameManager.OnNextLevel.Notify();
+
+            var yPosition = Mathf.Lerp(startPosition, endPosition, proportion);
 
             transform.localPosition = new Vector3(transform.localPosition.x, yPosition, transform.localPosition.z);
 
@@ -102,6 +109,12 @@ public class Elevator : MonoBehaviour
         yield return null;
 
         m_coroutine = null;
+    }
+
+    private void OnLevelUnload()
+    {
+        if (m_coroutine != null)
+            StopCoroutine(m_coroutine);
     }
 
     void OnTriggerEnter(Collider other)
@@ -146,4 +159,15 @@ public class Elevator : MonoBehaviour
             case PlayerController.Player.Player2: m_player2 = false; break;
         }
     }
+
+    void OnEnable()
+    {
+        Observer.GameManager.OnLevelUnload += OnLevelUnload;
+    }
+
+    void OnDisable()
+    {
+        Observer.GameManager.OnLevelUnload -= OnLevelUnload;
+    }
+
 }

@@ -168,6 +168,7 @@ public static class Observer
             public static Event OnInteract2 = new Event();
             public static Event OnLeftTrigger = new Event();
             public static Event OnRightTrigger = new Event();
+            public static Event OnCanPlay = new Event();
             public static Event OnCantPlay = new Event();
             
         }
@@ -176,6 +177,10 @@ public static class Observer
         {
             public static Event<PlayerController.Player> TurnOnOff = new Event<PlayerController.Player>();
             public static Event OnDeath = new Event();
+            public static Event OnStartGame = new Event();
+            public static Event OnLevelUnload = new Event();
+            public static Event OnNextLevel = new Event();
+            public static Event OnRestartlevel = new Event();
         }
 
     #endregion

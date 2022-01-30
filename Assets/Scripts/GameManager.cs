@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDeath()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Observer.GameManager.OnRestartlevel.Notify();
     }
 
     private void OnEnable()

@@ -99,6 +99,9 @@ public class WallTrigger : MonoBehaviour
 
     public void TurnOn(PlayerController.Player playerType)
     {
+        if (_playerType != playerType)
+            return;
+
         m_isOn = true;
         CallSwitch();
         Observer.GameManager.TurnOnOff.Notify(playerType);
