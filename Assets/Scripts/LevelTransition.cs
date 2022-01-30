@@ -8,7 +8,6 @@ public class LevelTransition : Singleton<LevelTransition>
 {
 
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private bool _lastLevel = false;
 
     protected override void Init()
     {
@@ -39,6 +38,13 @@ public class LevelTransition : Singleton<LevelTransition>
     private void RestartLevel()
     {
         var nextLevelScene = SceneManager.GetActiveScene().name;
+
+        StartCoroutine(GoToScene(nextLevelScene));
+    }
+
+    private void MainMenu()
+    {
+        var nextLevelScene = "Main_Menu";
 
         StartCoroutine(GoToScene(nextLevelScene));
     }
@@ -104,6 +110,9 @@ public class LevelTransition : Singleton<LevelTransition>
 
         var sceneNumber = int.Parse(sceneName.Split('_')[1]);
 
+        if (sceneNumber >= 8)
+            return "Credits";
+
         sceneNumber++;
 
         var nextLevelNumber = sceneNumber < 10 ? ("0" + sceneNumber) : ("" + sceneNumber);
@@ -116,6 +125,7 @@ public class LevelTransition : Singleton<LevelTransition>
         Observer.GameManager.OnStartGame += StartGame;
         Observer.GameManager.OnNextLevel += NextLevel;
         Observer.GameManager.OnRestartlevel += RestartLevel;
+        Observer.GameManager.OnMainMenu += MainMenu;
     }
 
     void OnDisable()
@@ -123,6 +133,7 @@ public class LevelTransition : Singleton<LevelTransition>
         Observer.GameManager.OnStartGame -= StartGame;
         Observer.GameManager.OnNextLevel -= NextLevel;
         Observer.GameManager.OnRestartlevel -= RestartLevel;
+        Observer.GameManager.OnMainMenu -= MainMenu;
     }
 
 }

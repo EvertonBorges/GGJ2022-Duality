@@ -181,6 +181,7 @@ public static class Observer
             public static Event OnLevelUnload = new Event();
             public static Event OnNextLevel = new Event();
             public static Event OnRestartlevel = new Event();
+            public static Event OnMainMenu = new Event();
         }
 
         public static class Audio
