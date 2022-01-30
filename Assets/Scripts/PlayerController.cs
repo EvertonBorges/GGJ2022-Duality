@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
     private bool m_isDashing = false;
 
+    private bool m_isOnGround = false;
+    private bool m_canCheckGround = true;
+
     private Vector3 m_move;
     private Vector3 m_direction;
 
@@ -43,6 +46,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         FixRotation();
+
+        CheckGround();
     }
 
     void FixedUpdate()
@@ -69,6 +74,18 @@ public class PlayerController : MonoBehaviour
             m_move = Vector3.zero;
     }
 
+    private void CheckGround()
+    {
+        if (_player != Player.Player1)
+            return;
+
+        if (m_isOnGround || !m_canCheckGround)
+            return;
+
+        if (Physics.Raycast(transform.position, Vector3.down, 0.51f))
+            m_isOnGround = true;
+    }
+
     private void OnMove()
     {
         if (m_isDashing)
@@ -87,6 +104,17 @@ public class PlayerController : MonoBehaviour
             return;
 
         m_rigidbody.AddForce(Vector3.up * value, ForceMode.Impulse);
+        m_isOnGround = false;
+        m_canCheckGround = false;
+
+        StartCoroutine(CanCheckGround());
+    }
+
+    private IEnumerator CanCheckGround()
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        m_canCheckGround = true;
     }
 
     private void OnDash(float distance)
@@ -107,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 endPosition = transform.position + transform.forward * distance;
 
-        while(currentTime < duration)
+        while (currentTime < duration)
         {
             if (!m_isDashing)
                 yield break;
@@ -146,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnLeftTrigger()
     {
-        if (_player != Player.Player1)
+        if (_player != Player.Player1 || !m_isOnGround)
             return;
 
         OnJump(_jumpForce);
