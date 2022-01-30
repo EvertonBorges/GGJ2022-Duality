@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] private Elevator _finalDoor;
+    [SerializeField] private Elevator _elevator;
 
     private bool _switchPlayer1 = false;
     private bool _switchPlayer2 = false;
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     private void CheckVictory()
     {
         if (_switchPlayer1 && _switchPlayer2)
-            _finalDoor.Unlock();
+            _elevator.Unlock();
     }
 
     private void OnDeath()

@@ -146,6 +146,8 @@ public class PlayerController : MonoBehaviour
         if (m_isDashing)
             return;
 
+        transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+
         StartCoroutine(OnDash(0.25f, distance));
     }
 
@@ -168,10 +170,14 @@ public class PlayerController : MonoBehaviour
 
             transform.position = Vector3.Lerp(startPosition, endPosition, currentTime / duration);
 
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+
             yield return null;
         }
 
         transform.position = endPosition;
+
+        transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
 
         yield return null;
 
@@ -282,7 +288,7 @@ public class PlayerController : MonoBehaviour
         m_canPlay = false;
 
         m_rigidbody.angularVelocity = Vector3.zero;
-        
+
         m_rigidbody.velocity = Vector3.zero;
     }
 
