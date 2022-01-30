@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] private Door _finalDoor;
+    [SerializeField] private Elevator _finalDoor;
 
     private bool _switchPlayer1 = false;
     private bool _switchPlayer2 = false;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     private void CheckVictory()
     {
         if (_switchPlayer1 && _switchPlayer2)
-            _finalDoor.Open();
+            _finalDoor.Unlock();
     }
 
     private void OnEnable()

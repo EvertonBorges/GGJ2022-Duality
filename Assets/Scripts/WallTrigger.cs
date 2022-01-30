@@ -48,12 +48,19 @@ public class WallTrigger : MonoBehaviour
 
     void Update()
     {
-        if (m_tutorial)
-        {
-            // Debug.Log("Camera angle: " + _cameraTransform.eulerAngles);
-            _canvas.transform.LookAt(_cameraTransform, Vector3.up);
-        }
+        FixCanvasRotation();
 
+        UpdateTutorialText();
+    }
+
+    private void FixCanvasRotation()
+    {
+        if (m_tutorial)
+            _canvas.transform.LookAt(_cameraTransform, Vector3.up);
+    }
+
+    private void UpdateTutorialText()
+    {
         if (gamepad == null && Gamepad.current != null)
         {
             gamepad = Gamepad.current;

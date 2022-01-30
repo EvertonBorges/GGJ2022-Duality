@@ -168,6 +168,8 @@ public static class Observer
             public static Event OnInteract2 = new Event();
             public static Event OnLeftTrigger = new Event();
             public static Event OnRightTrigger = new Event();
+            public static Event OnCantPlay = new Event();
+            
         }
 
         public static class GameManager

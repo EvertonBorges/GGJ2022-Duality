@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private bool m_isOnGround = false;
     private bool m_canCheckGround = true;
 
+    private bool m_canPlay = true;
+
     private Vector3 m_move;
     private Vector3 m_direction;
 
@@ -45,6 +47,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!m_canPlay)
+            return;
+
         FixRotation();
 
         CheckGround();
@@ -52,6 +57,15 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!m_canPlay)
+        {
+            m_rigidbody.angularVelocity = Vector3.zero;
+
+            m_rigidbody.velocity = new Vector3(0f, m_rigidbody.velocity.y, 0f);
+
+            return;
+        }
+
         OnMove();
     }
 
@@ -185,6 +199,9 @@ public class PlayerController : MonoBehaviour
         if (_player != Player.Player1 || !m_isOnGround)
             return;
 
+        if (!m_canPlay)
+            return;
+
         OnJump(_jumpForce);
     }
 
@@ -220,6 +237,9 @@ public class PlayerController : MonoBehaviour
     {
         if (_player != Player.Player2)
             return;
+        
+        if (!m_canPlay)
+            return;
 
         OnDash(_dashDistance);
     }
@@ -240,11 +260,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionPlayer2(Collision other)
     {
-        if (other.collider.CompareTag("Ground"))
+        if (other.collider.CompareTag("Ground") || other.collider.CompareTag("Elevator"))
             return;
 
         if (m_isDashing)
             m_isDashing = false;
+    }
+
+    private void OnCantPlay()
+    {
+        m_canPlay = false;
     }
 
     void OnEnable()
@@ -256,6 +281,8 @@ public class PlayerController : MonoBehaviour
         Observer.Player.OnRightStick += OnRightStick;
         Observer.Player.OnInteract2 += OnInteract2;
         Observer.Player.OnRightTrigger += OnRightTrigger;
+
+        Observer.Player.OnCantPlay += OnCantPlay;
     }
 
     void OnDisable()
@@ -267,5 +294,7 @@ public class PlayerController : MonoBehaviour
         Observer.Player.OnRightStick -= OnRightStick;
         Observer.Player.OnInteract2 -= OnInteract2;
         Observer.Player.OnRightTrigger -= OnRightTrigger;
+        
+        Observer.Player.OnCantPlay -= OnCantPlay;
     }
 }
