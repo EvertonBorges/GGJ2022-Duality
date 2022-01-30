@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,14 +29,21 @@ public class GameManager : MonoBehaviour
             _finalDoor.Unlock();
     }
 
+    private void OnDeath()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     private void OnEnable()
     {
         Observer.GameManager.TurnOnOff += TurnOnOff;
+        Observer.GameManager.OnDeath += OnDeath;
     }
 
     private void OnDisable()
     {
         Observer.GameManager.TurnOnOff -= TurnOnOff;
+        Observer.GameManager.OnDeath -= OnDeath;
     }
 
 }

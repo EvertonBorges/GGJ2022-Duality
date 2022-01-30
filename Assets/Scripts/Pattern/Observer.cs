@@ -175,6 +175,7 @@ public static class Observer
         public static class GameManager
         {
             public static Event<PlayerController.Player> TurnOnOff = new Event<PlayerController.Player>();
+            public static Event OnDeath = new Event();
         }
 
     #endregion

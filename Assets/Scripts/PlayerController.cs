@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        CheckDeath();
+
         if (!m_canPlay)
             return;
 
@@ -98,6 +100,14 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, 0.51f))
             m_isOnGround = true;
+    }
+
+    private void CheckDeath()
+    {
+        if (transform.position.y < -10f)
+        {
+            Observer.GameManager.OnDeath.Notify();
+        }
     }
 
     private void OnMove()
