@@ -14,12 +14,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Player _player = Player.Player1;
     [SerializeField] private float _speed = 4f;
     [SerializeField] private float _turnSmoothTime = 0.1f;
+    [SerializeField] private float _jumpForce = 1f;
+    [SerializeField] private float _dashDistance = 4f;
 
     private Transform m_camera;
     private Rigidbody m_rigidbody;
 
 
     private float m_turnSmoothVelocity = 0f;
+
+    private bool m_isDashing = false;
 
     private Vector3 m_move;
     private Vector3 m_direction;
@@ -46,6 +50,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixRotation()
     {
+        if (m_isDashing)
+            return;
+
         if (m_direction.magnitude >= 0.25f)
         {
             var targetAngle = Mathf.Atan2(m_direction.x, m_direction.z) * Mathf.Rad2Deg + m_camera.eulerAngles.y;
@@ -62,9 +69,57 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove()
     {
+        if (m_isDashing)
+            return;
+
         var velocity = m_move * _speed;
 
         m_rigidbody.velocity = new Vector3(velocity.x, m_rigidbody.velocity.y, velocity.z);
+    }
+
+    private void OnJump(float value)
+    {
+        if (m_isDashing)
+            return;
+
+        m_rigidbody.AddForce(Vector3.up * value, ForceMode.Impulse);
+    }
+
+    private void OnDash(float distance)
+    {
+        if (m_isDashing)
+            return;
+
+        StartCoroutine(OnDash(0.25f, distance));
+    }
+
+    private IEnumerator OnDash(float duration, float distance)
+    {
+        m_isDashing = true;
+
+        float currentTime = 0f;
+
+        Vector3 startPosition = transform.position;
+
+        Vector3 endPosition = transform.position + transform.forward * distance;
+
+        while(currentTime < duration)
+        {
+            if (!m_isDashing)
+                yield break;
+
+            currentTime += Time.deltaTime;
+
+            transform.position = Vector3.Lerp(startPosition, endPosition, currentTime / duration);
+
+            yield return null;
+        }
+
+        transform.position = endPosition;
+
+        yield return null;
+
+        m_isDashing = false;
     }
 
     #region Player 1 Controller
@@ -90,7 +145,7 @@ public class PlayerController : MonoBehaviour
         if (_player != Player.Player1)
             return;
 
-        Debug.Log("OnLeftTrigger");
+        OnJump(_jumpForce);
     }
 
     #endregion
@@ -118,10 +173,22 @@ public class PlayerController : MonoBehaviour
         if (_player != Player.Player2)
             return;
 
-        Debug.Log("OnRightTrigger");
+        OnDash(_dashDistance);
     }
 
     #endregion
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (_player == Player.Player2)
+            OnCollisionEnterPlayer2(other);
+    }
+
+    private void OnCollisionEnterPlayer2(Collision other)
+    {
+        if (m_isDashing)
+            m_isDashing = false;
+    }
 
     void OnEnable()
     {
