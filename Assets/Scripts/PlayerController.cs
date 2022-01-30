@@ -7,11 +7,13 @@ public class PlayerController : MonoBehaviour
 
     public enum Player
     {
+        Anyone = 0,
         Player1 = 1,
         Player2 = 2,
     }
 
-    [SerializeField] Player _player = Player.Player1;
+    [SerializeField] private Player _player = Player.Player1;
+    public Player PlayerType => _player;
     [SerializeField] private float _speed = 4f;
     [SerializeField] private float _turnSmoothTime = 0.1f;
     [SerializeField] private float _jumpForce = 1f;
@@ -73,6 +75,8 @@ public class PlayerController : MonoBehaviour
             return;
 
         var velocity = m_move * _speed;
+
+        m_rigidbody.angularVelocity = Vector3.zero;
 
         m_rigidbody.velocity = new Vector3(velocity.x, m_rigidbody.velocity.y, velocity.z);
     }
