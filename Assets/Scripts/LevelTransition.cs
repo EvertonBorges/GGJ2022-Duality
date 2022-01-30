@@ -22,6 +22,13 @@ public class LevelTransition : Singleton<LevelTransition>
         Observer.Player.OnCanPlay.Notify();
     }
 
+    private void StartGame()
+    {
+        var nextLevelScene = "Level_01";
+
+        StartCoroutine(GoToScene(nextLevelScene));
+    }
+
     private void NextLevel()
     {
         var nextLevelScene = NextLevelName();
@@ -34,6 +41,13 @@ public class LevelTransition : Singleton<LevelTransition>
         var nextLevelScene = SceneManager.GetActiveScene().name;
 
         StartCoroutine(GoToScene(nextLevelScene));
+    }
+
+    private IEnumerator PlayerCanPlay()
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        Observer.Player.OnCanPlay.Notify();
     }
 
     private IEnumerator GoToScene(string sceneName, float transitionTime = 0.5f)
@@ -99,12 +113,14 @@ public class LevelTransition : Singleton<LevelTransition>
 
     void OnEnable()
     {
+        Observer.GameManager.OnStartGame += StartGame;
         Observer.GameManager.OnNextLevel += NextLevel;
         Observer.GameManager.OnRestartlevel += RestartLevel;
     }
 
     void OnDisable()
     {
+        Observer.GameManager.OnStartGame -= StartGame;
         Observer.GameManager.OnNextLevel -= NextLevel;
         Observer.GameManager.OnRestartlevel -= RestartLevel;
     }

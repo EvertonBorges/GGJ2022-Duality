@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private bool m_canCheckGround = true;
 
     private bool m_canPlay = false;
+    private bool m_isAlive = true;
 
     private Vector3 m_move;
     private Vector3 m_direction;
@@ -104,8 +105,10 @@ public class PlayerController : MonoBehaviour
 
     private void CheckDeath()
     {
-        if (transform.position.y < -10f)
+        if (m_isAlive && transform.position.y < -10f)
         {
+            m_isAlive = false;
+
             Observer.GameManager.OnDeath.Notify();
         }
     }

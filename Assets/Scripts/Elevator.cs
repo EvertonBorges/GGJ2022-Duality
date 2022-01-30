@@ -88,14 +88,20 @@ public class Elevator : MonoBehaviour
 
         float proportion = 0f;
 
+        bool calledNextLevel = false;
+
         while (currentTime < duration)
         {
             currentTime += Time.deltaTime;
 
             proportion = currentTime / duration;
 
-            if (proportion > 0.25f)
+            if (!calledNextLevel && proportion > 0.25f)
+            {
                 Observer.GameManager.OnNextLevel.Notify();
+
+                calledNextLevel = true;
+            }
 
             var yPosition = Mathf.Lerp(startPosition, endPosition, proportion);
 
