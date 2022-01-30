@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trigger : MonoBehaviour
+public class WallTrigger : MonoBehaviour
 {
-
     [SerializeField] private PlayerController.Player _playerType;
 
     [SerializeField] private Material _player1Mat;
@@ -14,14 +13,9 @@ public class Trigger : MonoBehaviour
     [Header("Switch Infos")]
     [SerializeField] private Transform _switch;
 
-    [Header("Door References")]
-    [SerializeField] private Door _door;
-
     private bool m_isOn = false;
     
     public bool IsOn => m_isOn;
-
-    private List<int> m_collisions = new List<int>();
 
     private Coroutine m_coroutine = null;
 
@@ -41,47 +35,26 @@ public class Trigger : MonoBehaviour
             case PlayerController.Player.Player2: meshRenderer.material = _player2Mat; break;
         }
     }
-    
-    void OnTriggerEnter(Collider other)
+
+    public void ForceToTurnOff()
     {
-        if (!other.TryGetComponent<PlayerController>(out PlayerController player) || (_playerType != PlayerController.Player.Anyone && _playerType != player.PlayerType))
-            return;
+        m_isOn = false;
+        CallSwitch(0f);
+    }
 
-        m_collisions.Add(other.GetInstanceID());
-
+    public void TurnOn(PlayerController.Player playerType)
+    {
         m_isOn = true;
-
-        if (m_collisions.Count == 1)
-        {
-            CallSwitch();
-
-            _door.Open();
-        }
+        CallSwitch();
+        Observer.GameManager.TurnOnOff.Notify(playerType);
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (!other.TryGetComponent<PlayerController>(out PlayerController player) || (_playerType != PlayerController.Player.Anyone && _playerType != player.PlayerType))
-            return;
-
-        m_collisions.Remove(other.GetInstanceID());
-
-        if (m_collisions.Count <= 0)
-        {
-            m_isOn = false;
-
-            CallSwitch();
-
-            _door.Close();
-        }
-    }
-
-    private void CallSwitch()
+    private void CallSwitch(float duration = 0.25f)
     {
         if (m_coroutine != null)
             StopCoroutine(m_coroutine);
 
-        m_coroutine = StartCoroutine(Switch(0.25f));
+        m_coroutine = StartCoroutine(Switch(duration));
     }
 
     private IEnumerator Switch(float duration)
@@ -109,5 +82,4 @@ public class Trigger : MonoBehaviour
 
         m_coroutine = null;
     }
-
 }

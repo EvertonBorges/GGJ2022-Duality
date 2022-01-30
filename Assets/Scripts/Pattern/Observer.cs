@@ -170,6 +170,11 @@ public static class Observer
             public static Event OnRightTrigger = new Event();
         }
 
+        public static class GameManager
+        {
+            public static Event<PlayerController.Player> TurnOnOff = new Event<PlayerController.Player>();
+        }
+
     #endregion
 
 }

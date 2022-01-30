@@ -169,7 +169,15 @@ public class PlayerController : MonoBehaviour
         if (_player != Player.Player1)
             return;
 
-        Debug.Log("OnInteract1");
+        var colliders = Physics.OverlapBox(transform.position, Vector3.one * 0.5f, Quaternion.identity, 1 << LayerMask.NameToLayer("WallTrigger"));
+        if (colliders != null && colliders.Length > 0)
+            foreach(var c in colliders)
+                if (c.TryGetComponent<WallTrigger>(out WallTrigger trigger))
+                {
+                    trigger.TurnOn(_player);
+
+                    break;
+                }
     }
 
     private void OnLeftTrigger()
@@ -197,7 +205,15 @@ public class PlayerController : MonoBehaviour
         if (_player != Player.Player2)
             return;
 
-        Debug.Log("OnInteract2");
+        var colliders = Physics.OverlapBox(transform.position, Vector3.one * 0.5f, Quaternion.identity, 1 << LayerMask.NameToLayer("WallTrigger"));
+        if (colliders != null && colliders.Length > 0)
+            foreach(var c in colliders)
+                if (c.TryGetComponent<WallTrigger>(out WallTrigger trigger))
+                {
+                    trigger.TurnOn(_player);
+
+                    break;
+                }
     }
 
     private void OnRightTrigger()
