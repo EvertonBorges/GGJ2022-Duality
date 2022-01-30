@@ -875,7 +875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6387464567956148267, guid: 60d6797d780317843923d332f13a7512, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.25
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6387464567956148267, guid: 60d6797d780317843923d332f13a7512, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2714,6 +2714,10 @@ PrefabInstance:
     - target: {fileID: 1044089626, guid: a8d9ed96fc2f9854e96f488feab16e0c, type: 3}
       propertyPath: m_Text
       value: Hold the SWITCH
+      objectReference: {fileID: 0}
+    - target: {fileID: 2043513823, guid: a8d9ed96fc2f9854e96f488feab16e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2043513825, guid: a8d9ed96fc2f9854e96f488feab16e0c, type: 3}
       propertyPath: m_DynamicPixelsPerUnit
