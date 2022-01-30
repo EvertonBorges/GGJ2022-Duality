@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce = 1f;
     [SerializeField] private float _dashDistance = 4f;
 
+    [SerializeField] private AudioSource _audioJump = null;
+    [SerializeField] private AudioSource _audioDash = null;
+
     private Transform m_camera;
     private Rigidbody m_rigidbody;
 
@@ -39,6 +42,10 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+
+        _audioJump.Stop();
+
+        _audioDash.Stop();
     }
 
     void Start()
@@ -130,6 +137,8 @@ public class PlayerController : MonoBehaviour
         if (m_isDashing)
             return;
 
+        _audioJump.Play();
+
         m_rigidbody.AddForce(Vector3.up * value, ForceMode.Impulse);
         m_isOnGround = false;
         m_canCheckGround = false;
@@ -148,6 +157,8 @@ public class PlayerController : MonoBehaviour
     {
         if (m_isDashing)
             return;
+
+        _audioDash.Play();
 
         transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
 

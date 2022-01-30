@@ -11,6 +11,9 @@ public class Trigger : MonoBehaviour
     [SerializeField] private Material _player2Mat;
     [SerializeField] private Material _defaultMat;
 
+    [SerializeField] private AudioSource _audioOn;
+    [SerializeField] private AudioSource _audioOff;
+
     [Header("Switch Infos")]
     [SerializeField] private Transform _switch;
 
@@ -28,6 +31,9 @@ public class Trigger : MonoBehaviour
     void Awake()
     {
         ChangeSwitchMaterial();
+
+        _audioOff.Stop();
+        _audioOn.Stop();
     }
 
     private void ChangeSwitchMaterial()
@@ -78,6 +84,11 @@ public class Trigger : MonoBehaviour
 
     private void CallSwitch()
     {
+        if (m_isOn)
+            _audioOn.Play();
+        else
+            _audioOff.Play();
+
         if (m_coroutine != null)
             StopCoroutine(m_coroutine);
 

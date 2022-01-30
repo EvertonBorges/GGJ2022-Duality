@@ -17,6 +17,7 @@ public class WallTrigger : MonoBehaviour
 
     [Header("Switch Infos")]
     [SerializeField] private Transform _switch;
+    [SerializeField] private AudioSource _audio;
 
     private Transform m_cameraTransform;
     private MeshRenderer m_meshRenderer = null;
@@ -38,6 +39,8 @@ public class WallTrigger : MonoBehaviour
         ChangeSwitchMaterial();
 
         CallSwitch(0f);
+
+        _audio.Stop();
     }
 
     void Start()
@@ -104,6 +107,7 @@ public class WallTrigger : MonoBehaviour
 
         m_isOn = true;
         CallSwitch();
+        _audio.Play();
         Observer.GameManager.TurnOnOff.Notify(playerType);
     }
 

@@ -183,6 +183,12 @@ public static class Observer
             public static Event OnRestartlevel = new Event();
         }
 
+        public static class Audio
+        {
+            public static Event OnMainMenu = new Event();
+            public static Event OnStartGame = new Event();
+        }
+
     #endregion
 
 }
