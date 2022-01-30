@@ -37,7 +37,10 @@ public class PlayerController : MonoBehaviour
     private bool m_isAlive = true;
 
     private Vector3 m_move;
-    private Vector3 m_direction;
+    private Vector3 m_directionKeyboard;
+    private Vector3 m_directionGamepad;
+
+    public static bool IsGamepad { get; private set; } = false;
 
     void Awake()
     {
@@ -84,15 +87,29 @@ public class PlayerController : MonoBehaviour
         if (m_isDashing)
             return;
 
-        if (m_direction.magnitude >= 0.25f)
+        if (m_directionGamepad.magnitude >= 0.25f)
         {
-            var targetAngle = Mathf.Atan2(m_direction.x, m_direction.z) * Mathf.Rad2Deg + m_camera.eulerAngles.y;
+            var targetAngle = Mathf.Atan2(m_directionGamepad.x, m_directionGamepad.z) * Mathf.Rad2Deg + m_camera.eulerAngles.y;
 
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref m_turnSmoothVelocity, _turnSmoothTime);
 
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             m_move = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            IsGamepad = true;
+        }
+        else if (m_directionKeyboard.magnitude >= 0.25f)
+        {
+            var targetAngle = Mathf.Atan2(m_directionKeyboard.x, m_directionKeyboard.z) * Mathf.Rad2Deg + m_camera.eulerAngles.y;
+
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref m_turnSmoothVelocity, _turnSmoothTime);
+
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            m_move = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            IsGamepad = false;
         }
         else
             m_move = Vector3.zero;
@@ -200,12 +217,20 @@ public class PlayerController : MonoBehaviour
 
     #region Player 1 Controller
 
+    private void OnPlayer1Move(Vector2 value)
+    {
+        if (_player != Player.Player1)
+            return;
+
+        m_directionKeyboard = new Vector3(value.x, 0f, value.y);
+    }
+
     private void OnLeftStick(Vector2 value)
     {
         if (_player != Player.Player1)
             return;
 
-        m_direction = new Vector3(value.x, 0f, value.y);
+        m_directionGamepad = new Vector3(value.x, 0f, value.y);
     }
 
     private void OnInteract1()
@@ -239,12 +264,20 @@ public class PlayerController : MonoBehaviour
 
     #region Player 2 Controller
 
+    private void OnPlayer2Move(Vector2 value)
+    {
+        if (_player != Player.Player2)
+            return;
+
+        m_directionKeyboard = new Vector3(value.x, 0f, value.y);
+    }
+
     private void OnRightStick(Vector2 value)
     {
         if (_player != Player.Player2)
             return;
 
-        m_direction = new Vector3(value.x, 0f, value.y);
+        m_directionGamepad = new Vector3(value.x, 0f, value.y);
     }
 
     private void OnInteract2()
@@ -313,10 +346,12 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
+        Observer.Player.OnPlayer1Move += OnPlayer1Move;
         Observer.Player.OnLeftStick += OnLeftStick;
         Observer.Player.OnInteract1 += OnInteract1;
         Observer.Player.OnLeftTrigger += OnLeftTrigger;
 
+        Observer.Player.OnPlayer2Move += OnPlayer2Move;
         Observer.Player.OnRightStick += OnRightStick;
         Observer.Player.OnInteract2 += OnInteract2;
         Observer.Player.OnRightTrigger += OnRightTrigger;
@@ -327,10 +362,12 @@ public class PlayerController : MonoBehaviour
 
     void OnDisable()
     {
+        Observer.Player.OnPlayer1Move -= OnPlayer1Move;
         Observer.Player.OnLeftStick -= OnLeftStick;
         Observer.Player.OnInteract1 -= OnInteract1;
         Observer.Player.OnLeftTrigger -= OnLeftTrigger;
 
+        Observer.Player.OnPlayer2Move -= OnPlayer2Move;
         Observer.Player.OnRightStick -= OnRightStick;
         Observer.Player.OnInteract2 -= OnInteract2;
         Observer.Player.OnRightTrigger -= OnRightTrigger;

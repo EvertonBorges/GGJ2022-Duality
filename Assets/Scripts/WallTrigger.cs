@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class WallTrigger : MonoBehaviour
@@ -32,7 +31,7 @@ public class WallTrigger : MonoBehaviour
     private Coroutine m_coroutine = null;
     private Coroutine m_coroutineTutorial = null;
 
-    private Gamepad m_gamepad = null;
+    // private Gamepad m_gamepad = null;
 
     void Awake()
     {
@@ -65,16 +64,10 @@ public class WallTrigger : MonoBehaviour
 
     private void UpdateTutorialText()
     {
-        if (m_gamepad == null && Gamepad.current != null)
-        {
-            m_gamepad = Gamepad.current;
+        if (PlayerController.IsGamepad)
             _tutorial.text = _playerType == PlayerController.Player.Player1 ? "L1" : "R1";
-        }
-        else if (m_gamepad != null && Gamepad.current == null)
-        {
-            m_gamepad = null;
+        else
             _tutorial.text = _playerType == PlayerController.Player.Player1 ? "E" : "U";
-        }
     }
 
     private void ChangeSwitchMaterial()

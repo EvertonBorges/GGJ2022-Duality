@@ -164,6 +164,8 @@ public static class Observer
         {
             public static Event<Vector2> OnLeftStick = new Event<Vector2>(); 
             public static Event<Vector2> OnRightStick = new Event<Vector2>(); 
+            public static Event<Vector2> OnPlayer1Move = new Event<Vector2>(); 
+            public static Event<Vector2> OnPlayer2Move = new Event<Vector2>(); 
             public static Event OnInteract1 = new Event();
             public static Event OnInteract2 = new Event();
             public static Event OnLeftTrigger = new Event();

@@ -19,6 +19,22 @@ public class @InputActions : IInputActionCollection, IDisposable
             ""id"": ""70bd639b-6892-4ed3-8ab3-4969c0f19190"",
             ""actions"": [
                 {
+                    ""name"": ""Player1 Move"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""189b23e8-68e2-4bd4-bd3b-e764c253e59b"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Player2 Move"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""293a0712-3ad6-4de1-b830-18b2a53984e2"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Left Stick"",
                     ""type"": ""PassThrough"",
                     ""id"": ""4ade36fc-6fe2-4ca6-89b6-6679e2c769a4"",
@@ -69,19 +85,8 @@ public class @InputActions : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""ed26a200-18e8-4896-bfce-0cf19b1c94f3"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Left Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""e205b20b-2164-4279-a4e8-04fbc802ba00"",
+                    ""name"": ""Left D-Pad"",
+                    ""id"": ""e5e26530-ba2e-41c1-a299-838fb9d16f4a"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -92,8 +97,8 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""fe587558-2ed5-4c7b-a77d-618e702f81bb"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""828ad267-da46-4536-b4af-1e1ba9384c6d"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Desktop"",
@@ -103,8 +108,8 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""377eab06-01d6-4ea4-a5db-f88a6f234611"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""id"": ""62dac2be-1799-4aa0-bbb8-42e01c033bdd"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Desktop"",
@@ -114,8 +119,8 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""e729e9a9-c622-49e1-83d1-33b38d7a400c"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""id"": ""d88f5262-2461-49c7-be79-6fa302cb5ebb"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Desktop"",
@@ -125,8 +130,8 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""f97c855a-a5cd-462c-95a1-4ac797db253a"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""id"": ""072312c2-afb8-4ee9-a1a1-3a4de91e5fca"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Desktop"",
@@ -146,64 +151,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""IJKL"",
-                    ""id"": ""269dd83b-17cc-449b-898c-9a0e12f2d572"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Right Stick"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""8fa9c664-2010-4479-9f3c-0ade7c25e968"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Right Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""ccf004b9-ba4b-42f7-abd1-e0da91bd5835"",
-                    ""path"": ""<Keyboard>/k"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Right Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""490ea633-198d-4a80-862c-64cf2e48e880"",
-                    ""path"": ""<Keyboard>/j"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Right Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""c98e1f59-86b7-465d-a344-58b7e728d128"",
-                    ""path"": ""<Keyboard>/l"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Right Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""caa0a9a7-5fd4-4564-b051-6d750da4fed4"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Desktop"",
@@ -225,7 +175,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c456af73-8530-46b6-837f-b24ebbc0a63d"",
-                    ""path"": ""<Keyboard>/o"",
+                    ""path"": ""<Keyboard>/u"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Desktop"",
@@ -247,7 +197,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""701917fe-df03-4ef7-a10b-8b6faa8da10c"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -269,7 +219,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3b63b5fa-ed62-42c4-808c-fe002a827e45"",
-                    ""path"": ""<Keyboard>/u"",
+                    ""path"": ""<Keyboard>/o"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -287,6 +237,116 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""Right Trigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""10ee916c-5a45-42b2-88fb-ccc5d90cb40c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player1 Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""7d2b0ccf-0db9-4c7e-b332-93abb1dac73b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player1 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6afdc87c-c5d3-4f9a-94b9-9f96bd5de76c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player1 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""71889b73-1b83-437d-a058-4b47f11c3708"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player1 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8315a92c-069c-4581-9833-4385c3a6f13e"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player1 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""IJKL"",
+                    ""id"": ""2facce92-7684-485d-909e-5ea4fbb5ce5c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player2 Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""97166bd8-34c6-4d57-a25c-933d66f87277"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player2 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""8d22f1c8-9d4f-403a-9e02-21f93c64ab75"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player2 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""40200cd5-4603-4dde-9d2f-39557134c9cb"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player2 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d75c4604-0dbc-481a-8565-bf607b374902"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Player2 Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -302,13 +362,8 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isOR"": false
                 },
                 {
-                    ""devicePath"": ""<DualShockGamepad>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                },
-                {
                     ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": false,
+                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
@@ -317,6 +372,8 @@ public class @InputActions : IInputActionCollection, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_Player1Move = m_Gameplay.FindAction("Player1 Move", throwIfNotFound: true);
+        m_Gameplay_Player2Move = m_Gameplay.FindAction("Player2 Move", throwIfNotFound: true);
         m_Gameplay_LeftStick = m_Gameplay.FindAction("Left Stick", throwIfNotFound: true);
         m_Gameplay_RightStick = m_Gameplay.FindAction("Right Stick", throwIfNotFound: true);
         m_Gameplay_Interact1 = m_Gameplay.FindAction("Interact1", throwIfNotFound: true);
@@ -372,6 +429,8 @@ public class @InputActions : IInputActionCollection, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
+    private readonly InputAction m_Gameplay_Player1Move;
+    private readonly InputAction m_Gameplay_Player2Move;
     private readonly InputAction m_Gameplay_LeftStick;
     private readonly InputAction m_Gameplay_RightStick;
     private readonly InputAction m_Gameplay_Interact1;
@@ -382,6 +441,8 @@ public class @InputActions : IInputActionCollection, IDisposable
     {
         private @InputActions m_Wrapper;
         public GameplayActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Player1Move => m_Wrapper.m_Gameplay_Player1Move;
+        public InputAction @Player2Move => m_Wrapper.m_Gameplay_Player2Move;
         public InputAction @LeftStick => m_Wrapper.m_Gameplay_LeftStick;
         public InputAction @RightStick => m_Wrapper.m_Gameplay_RightStick;
         public InputAction @Interact1 => m_Wrapper.m_Gameplay_Interact1;
@@ -397,6 +458,12 @@ public class @InputActions : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
+                @Player1Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayer1Move;
+                @Player1Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayer1Move;
+                @Player1Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayer1Move;
+                @Player2Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayer2Move;
+                @Player2Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayer2Move;
+                @Player2Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayer2Move;
                 @LeftStick.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftStick;
                 @LeftStick.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftStick;
                 @LeftStick.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftStick;
@@ -419,6 +486,12 @@ public class @InputActions : IInputActionCollection, IDisposable
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @Player1Move.started += instance.OnPlayer1Move;
+                @Player1Move.performed += instance.OnPlayer1Move;
+                @Player1Move.canceled += instance.OnPlayer1Move;
+                @Player2Move.started += instance.OnPlayer2Move;
+                @Player2Move.performed += instance.OnPlayer2Move;
+                @Player2Move.canceled += instance.OnPlayer2Move;
                 @LeftStick.started += instance.OnLeftStick;
                 @LeftStick.performed += instance.OnLeftStick;
                 @LeftStick.canceled += instance.OnLeftStick;
@@ -452,6 +525,8 @@ public class @InputActions : IInputActionCollection, IDisposable
     }
     public interface IGameplayActions
     {
+        void OnPlayer1Move(InputAction.CallbackContext context);
+        void OnPlayer2Move(InputAction.CallbackContext context);
         void OnLeftStick(InputAction.CallbackContext context);
         void OnRightStick(InputAction.CallbackContext context);
         void OnInteract1(InputAction.CallbackContext context);
