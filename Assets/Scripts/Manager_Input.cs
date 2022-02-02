@@ -17,12 +17,13 @@ public static class Manager_Input
         gameplayActions = inputActions.Gameplay;
 
         gameplayActions.Player1Move.performed += ctx => Observer.Player.OnPlayer1Move.Notify(ctx.ReadValue<Vector2>());
-        gameplayActions.Player2Move.performed += ctx => Observer.Player.OnPlayer2Move.Notify(ctx.ReadValue<Vector2>());
         gameplayActions.LeftStick.performed += ctx => Observer.Player.OnLeftStick.Notify(ctx.ReadValue<Vector2>());
-        gameplayActions.RightStick.performed += ctx => Observer.Player.OnRightStick.Notify(ctx.ReadValue<Vector2>());
         gameplayActions.Interact1.performed += ctx => Observer.Player.OnInteract1.Notify();
-        gameplayActions.Interact2.performed += ctx => Observer.Player.OnInteract2.Notify();
         gameplayActions.LeftTrigger.performed += ctx => Observer.Player.OnLeftTrigger.Notify();
+        
+        gameplayActions.Player2Move.performed += ctx => Observer.Player.OnPlayer2Move.Notify(ctx.ReadValue<Vector2>());
+        gameplayActions.RightStick.performed += ctx => Observer.Player.OnRightStick.Notify(ctx.ReadValue<Vector2>());
+        gameplayActions.Interact2.performed += ctx => Observer.Player.OnInteract2.Notify();
         gameplayActions.RightTrigger.performed += ctx => Observer.Player.OnRightTrigger.Notify();
 
         inputActions.Enable();

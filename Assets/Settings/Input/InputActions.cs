@@ -85,61 +85,6 @@ public class @InputActions : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""Left D-Pad"",
-                    ""id"": ""e5e26530-ba2e-41c1-a299-838fb9d16f4a"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Left Stick"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""828ad267-da46-4536-b4af-1e1ba9384c6d"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Left Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""62dac2be-1799-4aa0-bbb8-42e01c033bdd"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Left Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""d88f5262-2461-49c7-be79-6fa302cb5ebb"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Left Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""072312c2-afb8-4ee9-a1a1-3a4de91e5fca"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Desktop"",
-                    ""action"": ""Left Stick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""631344a3-8979-41fe-b1b9-76beb490259b"",
                     ""path"": ""<Gamepad>/rightStick"",
@@ -347,6 +292,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""Player2 Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5c2bfd8-a291-4cd5-a33d-6204239dd031"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""Left Stick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
